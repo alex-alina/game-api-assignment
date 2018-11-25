@@ -67,13 +67,15 @@ export default class GameController {
       }
     }
 
-
-    if (colors.includes(color)) {
-      update.color = color
-    } else {
-      throw new BadRequestError("Valid colors: red, blue, green, yellow, magenta")
+    if(color){
+      if (colors.includes(color)) {
+        update.color = color
+      } else {
+        throw new BadRequestError("Valid colors: red, blue, green, yellow, magenta")
+      }
+  
     }
-
+   
 
 
 
