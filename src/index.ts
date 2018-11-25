@@ -8,9 +8,10 @@ const app = createKoaServer({
       GameController
    ]
 })
+const port = process.env.PORT || 4000
 
 setupDb()
    .then(_ =>
-      app.listen(4000, () => console.log('Listening on port 4000'))
+      app.listen(port, () => console.log(`Listening on port ${port}`))
    )
    .catch(err => console.error(err))
