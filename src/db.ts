@@ -2,6 +2,7 @@ import { createConnection } from 'typeorm'
 import { DefaultNamingStrategy } from 'typeorm/naming-strategy/DefaultNamingStrategy'
 import { NamingStrategyInterface } from 'typeorm/naming-strategy/NamingStrategyInterface'
 import { snakeCase } from 'typeorm/util/StringUtils'
+import Game from './games/entity';
 
 class CustomNamingStrategy extends DefaultNamingStrategy implements NamingStrategyInterface {
 
@@ -24,11 +25,13 @@ class CustomNamingStrategy extends DefaultNamingStrategy implements NamingStrate
 
 export default () =>
   createConnection({
-      type: "postgres",
-      url: process.env.DATABASE_URL || 'postgres://postgres:secret@localhost:5432/postgres',
-      entities: [],
-      synchronize: true,
-      logging: true,
-      namingStrategy: new CustomNamingStrategy()
+    type: "postgres",
+    url: process.env.DATABASE_URL || 'postgres://postgres:secret@localhost:5432/postgres',
+    entities: [
+      Game,
+    ],
+    synchronize: true,
+    logging: true,
+    namingStrategy: new CustomNamingStrategy()
   })
-  .then(_ => console.log('Connected to Postgres with TypeORM'))
+    .then(_ => console.log('Connected to Postgres with TypeORM'))
