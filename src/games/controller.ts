@@ -44,7 +44,6 @@ export default class GameController {
 
     return await game.save()
   }
-  // (not for id).
 
   @Put('/games/:id')
   async updateGame(
@@ -67,21 +66,16 @@ export default class GameController {
       }
     }
 
-    if(color){
+    if (color) {
       if (colors.includes(color)) {
         update.color = color
-      } else {
+      }
+      else {
         throw new BadRequestError("Valid colors: red, blue, green, yellow, magenta")
       }
-  
     }
-   
-
-
 
     return Game.merge(game, update).save()
   }
-
-
 }
 

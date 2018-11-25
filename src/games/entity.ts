@@ -4,7 +4,6 @@ import { IsString, IsJSON } from 'class-validator'
 
 export type Color = 'red'| 'blue'| 'green' | 'yellow' | 'magenta'
 
-
 @Entity()
 export default class Game extends BaseEntity {
 
