@@ -1,8 +1,8 @@
-import { JsonController, Get, Param, Body, BodyParam, Post, Put, HttpCode, NotFoundError } from 'routing-controllers'
-import Game from './entity';
+import { JsonController, Get, Param, Body, BodyParam, Post, Put, HttpCode, NotFoundError, BadRequestError } from 'routing-controllers'
+import Game, { Color } from './entity';
 
 
-const colors = ['red', 'blue', 'green', 'yellow', 'magenta']
+const colors: Array<Color> = ['red', 'blue', 'green', 'yellow', 'magenta']
 
 const defaultBoard = [
   ['o', 'o', 'o'],
@@ -10,10 +10,17 @@ const defaultBoard = [
   ['o', 'o', 'o']
 ]
 
-const randomColor = (): string => {
+const randomColor = (): Color => {
   let index = Math.floor(Math.random() * colors.length)
-  return colors[index]
+  let newColor: Color = colors[index]
+  return newColor
 }
+
+const moves = (board1, board2) =>
+  board1
+    .map((row, y) => row.filter((cell, x) => board2[y][x] !== cell))
+    .reduce((a, b) => a.concat(b))
+    .length
 
 @JsonController()
 
@@ -37,21 +44,38 @@ export default class GameController {
 
     return await game.save()
   }
-// (not for id).
+  // (not for id).
 
   @Put('/games/:id')
   async updateGame(
     @Param('id') id: number,
     @Body() update: Partial<Game>,
-    @BodyParam("board") board: string
+    @BodyParam("board") board: string,
+    @BodyParam("color") color: Color
   ) {
     const game = await Game.findOne(id)
     if (!game) throw new NotFoundError('Cannot find page')
-     
-    if(board){
+
+    if (board) {
       const newBoard = JSON.parse(board)
-      update.board = newBoard
+      const checkMoves = moves(game.board, newBoard)
+      if (checkMoves === 1) {
+        update.board = newBoard
       }
+      else {
+        throw new BadRequestError("Only one move on the board is allowed")
+      }
+    }
+
+
+    if (colors.includes(color)) {
+      update.color = color
+    } else {
+      throw new BadRequestError("Valid colors: red, blue, green, yellow, magenta")
+    }
+
+
+
 
     return Game.merge(game, update).save()
   }
