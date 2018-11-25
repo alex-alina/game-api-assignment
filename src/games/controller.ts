@@ -37,17 +37,25 @@ export default class GameController {
 
     return await game.save()
   }
-
+// (not for id).
 
   @Put('/games/:id')
   async updateGame(
     @Param('id') id: number,
-    @Body() update: Partial<Game>
+    @Body() update: Partial<Game>,
+    @BodyParam("board") board: string
   ) {
     const game = await Game.findOne(id)
     if (!game) throw new NotFoundError('Cannot find page')
+     
+    if(board){
+      const newBoard = JSON.parse(board)
+      update.board = newBoard
+      }
 
     return Game.merge(game, update).save()
   }
 
+
 }
+

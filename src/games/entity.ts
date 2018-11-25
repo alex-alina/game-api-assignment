@@ -1,8 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
 import { BaseEntity } from 'typeorm/repository/BaseEntity'
-import { IsString } from 'class-validator'
+import { IsString, IsJSON } from 'class-validator'
 
-
+// export type color = 'red'| 'blue'| 'green' | 'yellow' | 'magenta'
 
 
 @Entity()
@@ -19,7 +19,8 @@ export default class Game extends BaseEntity {
   @Column('text', { nullable: false })
   color: string
 
+  @IsJSON()
   @Column('json', { nullable: false })
-  board: Array<Array<string>>
+  board:  Array<Array<string>>
 
 } 
