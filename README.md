@@ -33,7 +33,7 @@ http PUT https://enigmatic-taiga-58228.herokuapp.com/games/2 board='[["o","o","o
 * You need a working Postgres database that is preferrably empty and running 
 * Install the dependencies using `npm install`
 * Start the server using `nodemon .`
-* You can now access enpoints with HTTPie commands on `localhost:4000`
+* Access enpoints with HTTPie commands on `localhost:4000`
 
 
 ## License
