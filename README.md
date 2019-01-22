@@ -25,7 +25,7 @@ Using HTTPie from the Terminal:
 ```bash
 http https://enigmatic-taiga-58228.herokuapp.com/games 
 http POST https://enigmatic-taiga-58228.herokuapp.com/games name="Munchkin game"
-http PUT https://enigmatic-taiga-58228.herokuapp.com/games/2 board='[["o","o","o"],["o","o","o"],["o","o","m"]]'
+http PUT https://enigmatic-taiga-58228.herokuapp.com/games/2 board='[["o","o","o"],["o","o","o"],["o","o","R"]]'
 ```
 
 ## Setup
